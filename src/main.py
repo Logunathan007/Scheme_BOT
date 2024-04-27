@@ -1,26 +1,10 @@
-input_str =  "Hi My name is Logunathan J . my age is 21" # input()
+from flask import Flask,render_template
 
-input_str = input_str.replace(",",".").replace("and",".")
+app = Flask(__name__, template_folder='./templates')
 
-input_ls = input_str.split(".")
+@app.route('/')
+def hello():
+    return render_template("index.html")
 
-key = ["name","age"]
-
-helper = ["hi","my","is"];
-
-pairs = {}
-
-for j in input_ls:
-    ls = j.split(" ")
-    keystr = ""
-    for i in range(len(ls)):
-        if(ls[i].lower() in helper):
-            ls[i] = ""
-        elif(ls[i].lower() in key):
-            keystr+=ls[i]+" ";
-            ls[i] = ""
-    pairs[keystr] = " ".join(ls).strip();
-print(pairs)
-
-            
-
+if __name__ == '__main__':
+    app.run(debug=True)
