@@ -9,5 +9,4 @@ bot_icon.addEventListener("click",()=>{
         msg_box.classList.add("on")
         msg_box.classList.remove("off")
     }
-    col
 });
