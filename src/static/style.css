@@ -7,6 +7,10 @@
 
 :root{
     --grean : #8EDF02;
+    --lightwhite: #F4F4F6;
+    --suggestionbggray: #b8b8bd;
+    --darkgray:#66666E;
+    --blue: rgba(86,211,251,255);
 }
 
 body{
@@ -48,10 +52,15 @@ body{
 .msg_box{
     width: 70vw;
     height: 90vh;
+    background-color: var(--lightwhite);
     margin:5vh;
     border-radius: 10px;
     position: relative;
     border: 3px solid var(--grean);
+    overflow-y: auto;
+}
+.msg{
+    overflow-y: auto;
 }
 
 .title_bar{
@@ -63,14 +72,16 @@ body{
     font-weight: 600;
     text-align: center;
     padding-top: 5px;
+    position: sticky;
+    top:0;
 }
 
 .input_box{
     width: 100%;
-    height: 10%;
+    height: 60px;
     border: 2px solid var(--grean);
     border-radius: 5px;
-    position: absolute;
+    position: sticky;
     bottom: 0px;
 }
 
@@ -95,3 +106,61 @@ body{
     font-size: 20px;
     cursor: pointer;
 }
+
+.sendbtn:hover{
+    font-size: 22px;
+    color:black;
+}
+
+.botmsg{
+    width: 70%;
+    min-height: 20px;
+    color: white;
+    background-color: var(--grean);
+    margin: 10px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    font-size: 1.5em;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.usermsg{
+    width: 70%;
+    color: white;
+    background-color: var(--blue);
+    margin: 10px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    font-size: 1.5em;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-left: auto;
+}
+
+.suggestionlist{
+    margin:.5%;
+    height: 60px;
+    background-color: var(--suggestionbggray);
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+    box-sizing: border-box;
+    position: sticky;
+    bottom: 60px;
+    border: none;
+    border-radius: 5px;
+}
+.sug{
+    background-color: var(--darkgray);
+    font-size: 1.2em;
+    margin: 3px 10px;
+    max-height: 60%;
+    padding: 3px 3px;
+    border-radius: 5px;
+    color:white;
+}
+
