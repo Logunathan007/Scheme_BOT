@@ -57,10 +57,11 @@ body{
     border-radius: 10px;
     position: relative;
     border: 3px solid var(--grean);
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 .msg{
     overflow-y: auto;
+    height: 70%;
 }
 
 .title_bar{
@@ -113,7 +114,8 @@ body{
 }
 
 .botmsg{
-    width: 70%;
+    width:fit-content;
+    max-width: 70%;
     min-height: 20px;
     color: white;
     background-color: var(--grean);
@@ -122,12 +124,13 @@ body{
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
     font-size: 1.5em;
-    padding: 5px;
+    padding: 10px;
     box-sizing: border-box;
 }
 
 .usermsg{
-    width: 70%;
+    width:fit-content;
+    max-width: 70%;
     color: white;
     background-color: var(--blue);
     margin: 10px;
@@ -135,15 +138,14 @@ body{
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
     font-size: 1.5em;
-    padding: 5px;
+    padding: 10px;
     box-sizing: border-box;
     margin-left: auto;
 }
 
 .suggestionlist{
     margin:.5%;
-    height: 60px;
-    background-color: var(--suggestionbggray);
+    height: 10%;
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
@@ -151,10 +153,12 @@ body{
     box-sizing: border-box;
     position: sticky;
     bottom: 60px;
+    top:
     border: none;
     border-radius: 5px;
 }
 .sug{
+    cursor: pointer;
     background-color: var(--darkgray);
     font-size: 1.2em;
     margin: 3px 10px;

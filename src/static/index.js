@@ -2,9 +2,21 @@ const bot_icon = document.querySelector(".bot_icon")
 const msg_box = document.querySelector(".msg_box")
 const suggestionlist = document.querySelector(".suggestionlist");
 const inputstr = document.querySelector(".inputstr");
+const msg = document.querySelector(".msg");
 
-var list = ["Java", "Python", "C", "SQL","c++"]
-list.sort();
+var suggestion_list = ["Java", "Python", "C", "SQL","c++"]
+suggestion_list.sort();
+
+let msg_history = [
+    {
+        type : "bot",
+        msg :"Hi What is your name?"
+    },
+    {
+        type : "user",
+        msg :"My name is Logunathan"
+    }
+]
 
 bot_icon.addEventListener("click",()=>{
     if(msg_box.classList.contains("on")){
@@ -16,22 +28,71 @@ bot_icon.addEventListener("click",()=>{
     }
 });
 
-
 inputstr.addEventListener("input",(eve)=>{
     var val = (eve.target.value);
-    list = list.filter((ele)=>{
-        return ((ele.toLowerCase()).indexOf(String(val).toLowerCase()) != -1)
+    list = suggestion_list.filter((ele)=>{
+        return ((ele.toLowerCase()).includes(String(val).toLowerCase()))
     }
     )
-    suggestionlist.innerHTML = "";
-    list.forEach((ele)=>{
+    display_suggestion(list);
+    if(val == ""){
+        suggestionlist.innerHTML = ""
+        suggestion_list.forEach((ele)=>{
+            suggestionlist.innerHTML+=`<div class="sug">${ele}</div>`
+        })
+    }
+    selector()
+})
+
+
+function display_suggestion(suggestion_list){
+    suggestionlist.innerHTML = ""
+    if(suggestion_list.length == 0){
+        suggestionlist.style.visibility =  "hidden";
+    }else{
+        suggestionlist.style.visibility =  "visible";
+    }
+    suggestion_list.forEach((ele)=>{
         suggestionlist.innerHTML+=`<div class="sug">${ele}</div>`
     })
-})
+    selector();
+}
 
-list.forEach((ele)=>{
-    suggestionlist.innerHTML+=`<div class="sug">${ele}</div>`
-})
+display_suggestion(suggestion_list)
 
+function selector(){
+    const select_sug = document.querySelectorAll(".sug");
+
+    select_sug.forEach(ele=>{
+        ele.addEventListener("click",(eve)=>{
+            inputstr.value = (ele.innerText);
+        })
+    })
+}
+function display_msg(){
+    msg.innerHTML = "";
+    msg_history.forEach((ele)=>{
+        if(ele.type == "bot"){
+            msg.innerHTML += `<div class="botmsg">${ele.msg}</div>`
+        }else{
+            msg.innerHTML += `<div class="usermsg">${ele.msg}</div>`    
+        }
+    })
+}
+display_msg();
+
+function savemsg(eve){
+    if(inputstr.value == ""){
+        return;
+    }
+    var obj = {
+        type : "user",
+        msg : `${inputstr.value}`
+    }
+    msg_history.push(obj);
+    inputstr.value = "";
+    display_msg();
+    display_suggestion(suggestion_list);
+}
 
 

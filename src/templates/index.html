@@ -16,32 +16,16 @@
             </div>
 
             <div class="msg">
-                <div class="botmsg">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa nihil, iure eum inventore porro, earum nobis aliquid consequatur quo, placeat eligendi libero laboriosam cum praesentium voluptatibus fuga a dolor illum.
-                </div>
-                <div class="usermsg">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti sunt corrupti quaerat temporibus voluptatum neque impedit eaque voluptas eos quas voluptatibus rem vero magni ad praesentium consequatur, maiores assumenda illum!
-                </div>
-                <div class="botmsg">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel fugit at soluta, laborum sunt deserunt explicabo suscipit iusto dolore consequatur alias aliquid earum sapiente quidem fuga ad cupiditate repellendus. Aut!
-                </div>
+                
+
             </div>
             <div class="suggestionlist">
-                <!-- <div class="sug">Java</div>
-                <div class="sug">Python</div>
-                <div class="sug">C </div>
-                <div class="sug">SQL</div>
-                <div class="sug">Java</div>
-                <div class="sug">Python</div>                <div class="sug">SQL</div>
-                <div class="sug">Java</div>
-                <div class="sug">Python</div>                <div class="sug">SQL</div>
-                <div class="sug">Java</div>
-                <div class="sug">Python</div> -->
+            
             </div>
-            <div class="input_box">
-                <input class="inputstr"type="text" placeholder="Text to be send...">
-                <div class="sendbtn">Send <i class="fa fa-send-o"></i></div>
-            </div>
+            <form class="input_box" onclick="event.preventDefault();">
+                <input class="inputstr"type="text" placeholder="Text to be send..." autofocus>
+                <button class="sendbtn" type="submit" onclick="savemsg()">Send <i class="fa fa-send-o"></i></button>
+            </form>
         </div>
     </div>
     <script src="../static/index.js"> </script>
