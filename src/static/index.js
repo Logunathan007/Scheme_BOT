@@ -8,19 +8,12 @@ let suggestion_list = ["Java", "Python", "C", "SQL","c++"]
 suggestion_list.sort();
 
 let msg_history = [
-    {
-        type : "bot",
-        msg :"Hi What is your name?"
-    },
-    {
-        type : "user",
-        msg :"My name is Logunathan"
-    }
+
 ]
 
 let question_obj = {
     question_id : "qno1",
-    question : "What is your name",
+    question : "What is your name ?",
     suggestion : ["Ram","Sam","Gopal"],
     key : "name",
     value : "",
@@ -100,8 +93,11 @@ function savemsg(eve){
         msg : `${inputstr.value}`
     }
     msg_history.push(obj);
-    inputstr.value = "";
+    question_obj.value = inputstr.value;
+    sendResponce(question_obj);
     display_msg();
+    inputstr.value = "";
+    inputstr.placeholder = "Text to be send..."
     display_suggestion(suggestion_list);
 }
 
@@ -112,9 +108,20 @@ function extract_question(){
     })
     display_msg();
     suggestion_list = question_obj.suggestion
-    display_suggestion(suggestion_list)
-    
+    display_suggestion(suggestion_list) 
+    inputstr.placeholder = question_obj.placeholder  
 }
 
+extract_question();
 
-
+async function sendResponce(obj){
+    const res = await fetch("http://localhost:5000/data",{
+        method : "POST",
+        headers : {'Content-Type': 'application/json'},
+        body : JSON.stringify(obj)
+    }).then((result)=>{
+        return result.json()
+    }).then(msg =>{
+        console.log(msg);
+    }).catch((err)=>console.log(err))
+}
