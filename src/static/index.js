@@ -4,7 +4,7 @@ const suggestionlist = document.querySelector(".suggestionlist");
 const inputstr = document.querySelector(".inputstr");
 const msg = document.querySelector(".msg");
 
-var suggestion_list = ["Java", "Python", "C", "SQL","c++"]
+let suggestion_list = ["Java", "Python", "C", "SQL","c++"]
 suggestion_list.sort();
 
 let msg_history = [
@@ -17,6 +17,16 @@ let msg_history = [
         msg :"My name is Logunathan"
     }
 ]
+
+let question_obj = {
+    question_id : "qno1",
+    question : "What is your name",
+    suggestion : ["Ram","Sam","Gopal"],
+    key : "name",
+    value : "",
+    category:"general",
+    placeholder:"Enter your name ..."
+}
 
 bot_icon.addEventListener("click",()=>{
     if(msg_box.classList.contains("on")){
@@ -94,5 +104,17 @@ function savemsg(eve){
     display_msg();
     display_suggestion(suggestion_list);
 }
+
+function extract_question(){
+    msg_history.push({
+        type : "bot",
+        msg : question_obj.question
+    })
+    display_msg();
+    suggestion_list = question_obj.suggestion
+    display_suggestion(suggestion_list)
+    
+}
+
 
 
