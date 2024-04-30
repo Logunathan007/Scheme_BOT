@@ -4,6 +4,50 @@ app = Flask(__name__, template_folder='./templates')
 
 CORS(app) 
 
+question_set = {
+    general : [
+        {
+            question_id : "qno1",
+            question : "What is your Name ?",
+            suggestion : ["Ram","Sam","Gopal"],
+            key : "name",
+            value : "",
+            category:"general",
+            placeholder:"Enter your name ..."
+        },
+        {
+            question_id : "qno2",
+            question : "What is your Age ?",
+            suggestion : ["18","20","21"],
+            key : "age",
+            value : "",
+            category:"general",
+            placeholder:"Enter your Age ..."
+        },
+        {
+            question_id : "qno3",
+            question : "What is your Occupation ?",
+            suggestion : ["Student","Electriction","Engineer","Doctor"],
+            key : "age",
+            value : "",
+            category:"general",
+            placeholder:"Enter your Age ..."            
+        }
+    ],
+    student:[
+        {
+            question_id : "qno1",
+            question : "What is your Qualification ?",
+            suggestion : ["Student","Electriction","Engineer","Doctor"],
+            key : "age",
+            value : "",
+            category:"general",
+            placeholder:"Enter your Age ..."            
+        }
+    ]
+}
+
+
 @app.route('/')
 def hello():
     return render_template("index.html")
