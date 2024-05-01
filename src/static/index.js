@@ -4,22 +4,32 @@ const suggestionlist = document.querySelector(".suggestionlist");
 const inputstr = document.querySelector(".inputstr");
 const msg = document.querySelector(".msg");
 
-let suggestion_list = ["Java", "Python", "C", "SQL","c++"]
+let suggestion_list = []
 suggestion_list.sort();
 
-let msg_history = [
+let msg_history = []
 
-]
+let question_obj 
 
-let question_obj = {
-    question_id : "qno1",
-    question : "What is your name ?",
-    suggestion : ["Ram","Sam","Gopal"],
-    key : "name",
-    value : "",
-    category:"general",
-    placeholder:"Enter your name ..."
+
+function getQuestion(obj){
+    setTimeout(async()=>{
+        question_obj = await sendResponce('data',obj)
+        console.log(question_obj)
+        if(question_obj?.end_of_conversation){
+            msg.innerHTML += `<div class="botmsg">Thank You...</div>`
+            setTimeout(()=>{
+                bot_icon.click();
+            },2000)
+        }else{
+            extract_question()
+        }
+    }
+    ,2000)
 }
+
+getQuestion({});
+
 
 bot_icon.addEventListener("click",()=>{
     if(msg_box.classList.contains("on")){
@@ -50,12 +60,12 @@ inputstr.addEventListener("input",(eve)=>{
 
 function display_suggestion(suggestion_list){
     suggestionlist.innerHTML = ""
-    if(suggestion_list.length == 0){
-        suggestionlist.style.visibility =  "hidden";
-    }else{
+    if(suggestion_list?.length != 0){
         suggestionlist.style.visibility =  "visible";
+    }else{
+        suggestionlist.style.visibility =  "hidden";
     }
-    suggestion_list.forEach((ele)=>{
+    suggestion_list?.forEach((ele)=>{
         suggestionlist.innerHTML+=`<div class="sug">${ele}</div>`
     })
     selector();
@@ -94,34 +104,36 @@ function savemsg(eve){
     }
     msg_history.push(obj);
     question_obj.value = inputstr.value;
-    sendResponce(question_obj);
+    inputstr.placeholder = "Text to be send..."
+    display_suggestion([])
+    getQuestion(question_obj);
     display_msg();
     inputstr.value = "";
-    inputstr.placeholder = "Text to be send..."
-    display_suggestion(suggestion_list);
 }
 
 function extract_question(){
     msg_history.push({
         type : "bot",
-        msg : question_obj.question
+        msg : question_obj?.question
     })
     display_msg();
-    suggestion_list = question_obj.suggestion
+    suggestion_list = question_obj?.suggestion
     display_suggestion(suggestion_list) 
-    inputstr.placeholder = question_obj.placeholder  
+    inputstr.placeholder = question_obj?.placeholder  
 }
 
-extract_question();
 
-async function sendResponce(obj){
-    const res = await fetch("http://localhost:5000/data",{
-        method : "POST",
-        headers : {'Content-Type': 'application/json'},
-        body : JSON.stringify(obj)
-    }).then((result)=>{
-        return result.json()
-    }).then(msg =>{
-        console.log(msg);
-    }).catch((err)=>console.log(err))
+async function sendResponce(url,obj){
+    try{
+        const res = await fetch(`http://localhost:5000/${url}`,{
+            method : "POST",
+            headers : {'Content-Type': 'application/json'},
+            body : JSON.stringify(obj)
+        })
+        const ans = res.json()
+        return ans;
+    }
+    catch(err){
+        console.log(err)
+    }
 }
