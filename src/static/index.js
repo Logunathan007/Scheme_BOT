@@ -4,6 +4,8 @@ const suggestionlist = document.querySelector(".suggestionlist");
 const inputstr = document.querySelector(".inputstr");
 const msg = document.querySelector(".msg");
 
+
+
 let suggestion_list = []
 suggestion_list.sort();
 

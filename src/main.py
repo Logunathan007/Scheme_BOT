@@ -1,10 +1,25 @@
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify,redirect
 from flask_cors import CORS
 app = Flask(__name__, template_folder='./templates')
 
 CORS(app) 
 
-class PyObject:
+class PyObject_SQL:
+    def __init__(self):
+        self.userdata =[
+        {
+            'userid' : 'uid1',
+            'username' : 'logunathan',
+            'useremail' : 'logulogu20032003@gmail.com',
+            'userpassword' : 'logulogu',
+        }
+        ]
+        
+    def userIdGenerator(self):
+        tailid = self.userdata[len(self.userdata)-1]['userid']
+        return('uid'+(str(int(tailid.replace('uid',''))+1)))
+
+class PyObject_BOT:
     def __init__(self):
         self.question_set = {
             "general": [
@@ -81,11 +96,53 @@ class PyObject:
                 self.questions.append(i);
             self.list_index+=1;
                 
-po = PyObject();
+po = PyObject_BOT();
+pos = PyObject_SQL();
 
 @app.route('/')
-def hello():
-    return render_template("index.html")
+@app.route('/signup')
+def signup():
+    return render_template("up.html")
+
+@app.route('/signin')
+def signin():
+    return render_template("in.html")
+
+@app.route('/home/<id>')
+def home(id):
+    return "welcome home "+ id;
+
+@app.route('/in_up/<string>',methods=["POST","GET"])
+def sign_in_up(string):
+    if(request.method == "POST"):    
+        useremail = request.form.get('useremail')
+        userpassword = request.form.get('password1')
+        if(string == "signup"):
+            userid = pos.userIdGenerator()
+            username = request.form.get('username')
+            if(useremail in [i['useremail'] for i in pos.userdata]):
+                return render_template("up.html",msg = "Email id is already used")
+            else:
+                temp = {}
+                temp['username'] = username;
+                temp['userid'] = userid;
+                temp['useremail'] = useremail;
+                temp['userpassword'] = userpassword;
+                pos.userdata.append(temp);
+                print(pos.userdata)
+                return redirect('/signin')
+        elif(string == "signin"):
+            if(useremail not in [i['useremail'] for i in pos.userdata]):
+                return render_template("in.html",msg = "Your Email Id is not Registered.")
+            else:
+                for i in pos.userdata:
+                    if(i['useremail'] == useremail):
+                        if(i['userpassword'] == userpassword):
+                            return redirect('/home/'+i['userid']);
+                        else:
+                            return render_template("in.html",msg = "Password is not matched.")
+                        
+    return "Not worked"
 
 @app.route('/data',methods=["POST"])
 def responseData():
