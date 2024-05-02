@@ -3,6 +3,7 @@ from flask_cors import CORS
 app = Flask(__name__, template_folder='./templates')
 
 CORS(app) 
+        
 
 class PyObject_SQL:
     def __init__(self):
@@ -110,7 +111,7 @@ def signin():
 
 @app.route('/home/<id>')
 def home(id):
-    return "welcome home "+ id;
+    return render_template('index.html')
 
 @app.route('/in_up/<string>',methods=["POST","GET"])
 def sign_in_up(string):
